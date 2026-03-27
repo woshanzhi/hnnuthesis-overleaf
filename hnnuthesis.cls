@@ -7,9 +7,15 @@
 \RequirePackage{geometry}
 \geometry{top=25mm,bottom=25mm,left=30mm,right=25mm}
 
+% 字体设置
+\RequirePackage{newtxtext} % 英文 Times New Roman
+
 % 行距
 \RequirePackage{setspace}
-\onehalfspacing
+\setstretch{1.5} % 1.5倍行距
+
+% 默认正文小四号字
+\AtBeginDocument{\zihao{-4}}
 
 % 首行缩进
 \RequirePackage{indentfirst}
@@ -17,6 +23,7 @@
 
 % 数学
 \RequirePackage{amsmath,amssymb}
+\numberwithin{equation}{section} % 公式按章节编号
 
 % 图片
 \RequirePackage{graphicx}
@@ -24,40 +31,74 @@
 % 表格
 \RequirePackage{booktabs}
 \RequirePackage{multirow}
+\RequirePackage{etoolbox}
+\AtBeginEnvironment{tabular}{\zihao{5}} % 表格内文字五号
+\AtBeginEnvironment{tabularx}{\zihao{5}}
 
 % 图表标题
 \RequirePackage{caption}
+\RequirePackage[normalem]{ulem}
+\RequirePackage{fancyhdr}
+\RequirePackage{lastpage}
+
+% 设置页码格式
+\fancypagestyle{main}{
+    \fancyhf{}
+    \fancyhead[C]{\heiti\zihao{-5} \thesistitle}
+    \fancyfoot[C]{\songti\zihao{-5} 第 \thepage\ 页 共 \pageref{LastPage} 页}
+    \renewcommand{\headrulewidth}{0.5pt}
+}
+
+\fancypagestyle{abstract}{
+    \fancyhf{}
+    \fancyhead[C]{\heiti\zihao{-5} \thesistitle}
+    \fancyfoot[C]{}
+    \renewcommand{\headrulewidth}{0.5pt}
+}
+
+% 按章节编号
+\RequirePackage{chngcntr}
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
 
 \captionsetup[figure]{
-font=small,
-labelfont=bf,
-labelsep=space
+    labelsep=space,
+    name=图,
+    format=plain,
+    justification=centering,
+    position=bottom
 }
+% 图序和图题五号宋体
+\DeclareCaptionFont{five}{\songti\zihao{5}}
+\captionsetup[figure]{font=five}
 
 \captionsetup[table]{
-font=small,
-labelfont=bf,
-position=top
+    labelsep=space,
+    name=表,
+    position=top,
+    justification=centering
 }
+% 表题五号宋体加黑
+\DeclareCaptionFont{fivebf}{\songti\bfseries\zihao{5}}
+\captionsetup[table]{font=fivebf}
 
 % 参考文献上标
 \newcommand{\upcite}[1]{\textsuperscript{\cite{#1}}}
 
 % 标题格式
 \ctexset{
-
-section={
-format=\centering\heiti\zihao{-3},
-beforeskip=1\baselineskip,
-afterskip=1\baselineskip
-},
-
-subsection={
-format=\heiti\zihao{4},
-beforeskip=0.5\baselineskip,
-afterskip=0.5\baselineskip
-}
-
+    section={
+        format=\centering\heiti\zihao{-3},
+        beforeskip=1\baselineskip,
+        afterskip=1\baselineskip
+    },
+    subsection={
+        format=\heiti\zihao{4},
+        indent=0pt,
+        aftername=\quad,
+        beforeskip=0.5\baselineskip,
+        afterskip=0.5\baselineskip
+    }
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -68,24 +109,26 @@ afterskip=0.5\baselineskip
 \newcommand{\studentname}{}
 \newcommand{\studentid}{}
 \newcommand{\class}{}
-\newcommand{\major}{}
+\newcommand{\institute}{} % 学院
 \newcommand{\supervisor}{}
 
 \newcommand{\yearinfo}{}
 \newcommand{\monthinfo}{}
+\newcommand{\dayinfo}{}    % 加入日期
 
 \newcommand{\titleinfo}[6]{
 \renewcommand{\thesistitle}{#1}
 \renewcommand{\studentname}{#2}
 \renewcommand{\studentid}{#3}
 \renewcommand{\class}{#4}
-\renewcommand{\major}{#5}
+\renewcommand{\institute}{#5} % 学院
 \renewcommand{\supervisor}{#6}
 }
 
-\newcommand{\thesisdate}[2]{
+\newcommand{\thesisdate}[3]{ % 改为 年 月 日
 \renewcommand{\yearinfo}{#1}
 \renewcommand{\monthinfo}{#2}
+\renewcommand{\dayinfo}{#3}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -121,8 +164,12 @@ afterskip=0.5\baselineskip
 
 \vspace{0.8cm}
 
+% 自适应下划线题目，支持两行居中
 {\songti\bfseries\zihao{2}
-\underline{\makebox[12cm][c]{\thesistitle}}
+\begin{tabular}{c}
+\uline{\makebox[16cm][c]{\thesistitle}} \\
+\uline{\makebox[16cm][c]{}}
+\end{tabular}
 }
 
 \vspace{2.5cm}
@@ -141,7 +188,7 @@ afterskip=0.5\baselineskip
 \underline{\makebox[8cm][c]{\class}} \\[1em]
 
 专\quad 业： &
-\underline{\makebox[8cm][c]{\major}} \\[1em]
+\underline{\makebox[8cm][c]{\institute}} \\[1em]
 
 指导教师： &
 \underline{\makebox[8cm][c]{\supervisor}}
@@ -184,7 +231,7 @@ afterskip=0.5\baselineskip
 \underline{\makebox[8cm][c]{\class}} \\[1.2em]
 
 所 在 学 院： &
-\underline{\makebox[8cm][c]{\major}} \\[1.2em]
+\underline{\makebox[8cm][c]{\institute}} \\[1.2em]
 
 指导教师： &
 \underline{\makebox[8cm][c]{\supervisor}} \\[1.2em]
@@ -203,11 +250,11 @@ afterskip=0.5\baselineskip
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 第三页 诚信声明
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\vspace*{3\baselineskip}  % 离页顶空三行
+\vspace*{3\baselineskip}
 
 \section*{诚信声明}
 
-\vspace*{2\baselineskip}  % 离标题空两行
+\vspace*{2\baselineskip}
 
 本人声明：
 
@@ -217,13 +264,106 @@ afterskip=0.5\baselineskip
 
 3、我承诺，本人提交的毕业设计（论文）中的所有内容均真实、可信。
 
-\vspace*{5\baselineskip}  % 离正文空五行
+\vspace*{5\baselineskip}
 
-% 作者签名和日期同一行
+% 自动生成 年 月 日
 {\songti\bfseries\zihao{3}
 作者签名：\underline{\makebox[4cm][c]{\studentname}} \hspace{2cm}
-日期：\underline{\makebox[4cm][c]{\yearinfo\ 年\ \monthinfo\ 月\ 日}}
+日期：\underline{\makebox[5cm][c]{\yearinfo\ 年\ \monthinfo\ 月\ \dayinfo\ 日}}
 }
 \newpage
 
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 摘要环境
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 中文摘要
+\newcommand{\cabstract}[2]{
+    \clearpage
+    \pagestyle{abstract}
+    \begin{center}
+        \vspace*{1\baselineskip}
+        {\heiti\zihao{3} \thesistitle}
+        \vspace*{1\baselineskip}
+    \end{center}
+    \begin{center}
+        {\heiti\zihao{-3} 摘\quad 要}
+    \end{center}
+    \vspace*{1\baselineskip}
+    {\songti\zihao{-4} #1}
+    \vspace*{2\baselineskip}
+    \par\noindent{\heiti\zihao{4} 关键词：}{\songti\zihao{-4} #2}
+}
+
+% 英文摘要
+\newcommand{\eabstract}[3]{
+    \clearpage
+    \pagestyle{abstract}
+    \begin{center}
+        \vspace*{1\baselineskip}
+        {\bfseries\zihao{3} \MakeUppercase{#1}}
+        \vspace*{1\baselineskip}
+    \end{center}
+    \begin{center}
+        {\bfseries\zihao{-3} ABSTRACT}
+    \end{center}
+    \vspace*{1\baselineskip}
+    {\zihao{-4} #2}
+    \vspace*{2\baselineskip}
+    \par\noindent{\bfseries\zihao{4} Key words:}{\zihao{-4} #3}
+}
+
+% 正文开始命令
+\newcommand{\startmain}{
+    \clearpage
+    \pagestyle{main}
+    \pagenumbering{arabic}
+    \setcounter{page}{1}
+}
+
+% 附录
+\newcommand{\appendixpage}{
+    \clearpage
+    \appendix
+    \ctexset{
+        section={
+            name={附录,},
+            number=\Alph{section},
+            format=\centering\heiti\zihao{3},
+            beforeskip=1\baselineskip,
+            afterskip=1\baselineskip
+        }
+    }
+}
+
+% 致谢
+\newcommand{\acknowledgment}[1]{
+    \clearpage
+    \begin{center}
+        \vspace*{1\baselineskip}
+        {\heiti\zihao{-3} 致\quad 谢}
+        \vspace*{1\baselineskip}
+    \end{center}
+    {\songti\zihao{-4} #1}
+}
+
+% 参考文献环境
+\RequirePackage{natbib}
+\renewcommand{\bibsection}{
+    \clearpage
+    \begin{center}
+        \vspace*{1\baselineskip}
+        {\heiti\zihao{-3} 参考文献}
+        \vspace*{1\baselineskip}
+    \end{center}
+}
+\renewcommand{\bibfont}{\songti\zihao{-4}}
+\setlength{\bibsep}{0pt}
+\setcitestyle{square,super,comma}
+
+% 分项序号 (1) (2) (3)
+\RequirePackage{enumitem}
+\setlist[enumerate,1]{label=(\arabic*)}
+
