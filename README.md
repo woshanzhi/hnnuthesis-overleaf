@@ -1,204 +1,295 @@
-# 🎓 HNNUThesis-Overleaf
+# HNNUThesis-Overleaf
 
-湖南第一师范学院 本科毕业设计（论文）LaTeX 模板，适配 Overleaf，同时支持本地 TeX 环境（TeXstudio/VS Code）编译，极简配置、开箱即用。
+湖南第一师范学院本科毕业设计（论文）LaTeX 模板，适配 Overleaf，同时支持本地 TeX 环境编译。
 
-## 📋 模板简介
+## 模板简介
 
 | 项目 | 说明 |
 |------|------|
-| **适配院校** | 湖南第一师范学院 |
-| **文档类型** | 本科毕业设计 / 论文（计算机学院） |
-| **核心文件** | `hnnuthesis.cls` 为模板核心类文件，封装所有格式与自定义命令，主文档直接调用即可 |
-| **编译环境** | Overleaf（推荐 XeLaTeX 编译器）、本地 TeX 环境（TeX Live/MiKTeX + XeLaTeX） |
+| 适配院校 | 湖南第一师范学院 |
+| 文档类型 | 本科毕业设计 / 论文 |
+| 核心文件 | `hnnuthesis.cls` |
+| 示例文件 | `example.tex` |
+| 推荐编译方式 | XeLaTeX |
 
-## 📁 目录结构
+## 目录结构
 
-```
+```text
 hnnuthesis-overleaf/
-├── hnnuthesis.cls              # 模板核心类文件（封装所有格式/自定义命令）
-├── example.tex                 # 论文样例文档（参考格式和写作规范）
-├── figure/                     # 图片专用文件夹
-│   ├── dysf.jpg               # 学校校徽
-│   └── school.png             # 学校标识
-├── simsun.ttc                 # 宋体字体文件
-├── simkai.ttf                 # 楷体字体文件
-├── LICENSE                    # Apache 2.0 开源许可证
-└── README.md                  # 本文件
+├── hnnuthesis.cls
+├── example.tex
+├── README.md
+├── LICENSE
+└── figure/
+    ├── dysf.jpg
+    └── school.png
 ```
 
-## 🚀 快速开始
+## 快速开始
 
-### 方法 1：Overleaf 在线编译（推荐，最简便）
+### Overleaf 编译
 
-1. **下载模板**：从 GitHub 页面 → Code → Download ZIP，下载本仓库压缩包
-2. **上传到 Overleaf**：
-   - 登录 [Overleaf](https://www.overleaf.com)
-   - 点击「New Project」→「Upload Project」
-   - 选择下载的 ZIP 文件并上传
-3. **设置编译器**：项目菜单 → Compiler 选择「XeLaTeX」
-4. **编译与查看**：点击「Recompile」，即可在右侧查看生成的 PDF
+1. 下载或克隆本项目。
+2. 上传到 Overleaf。
+3. 将编译器设置为 `XeLaTeX`。
+4. 编译 `example.tex` 即可生成论文 PDF。
 
-### 方法 2：本地编译（TeXstudio/VS Code）
+### 本地编译
 
-#### 前置要求
-- **LaTeX 发行版**：TeX Live（推荐）或 MiKTeX
-- **编辑器**：TeXstudio、VS Code + LaTeX Workshop 扩展
-- **字体**：模板已包含宋体（simsun.ttc）和楷体（simkai.ttf）
+1. 安装 TeX Live 或 MiKTeX。
+2. 使用 TeXstudio、VS Code + LaTeX Workshop 等编辑器打开项目。
+3. 选择 `XeLaTeX` 编译器。
+4. 编译 `example.tex`。
 
-#### 编译步骤
-1. 安装 TeX Live 或 MiKTeX
-2. 用编辑器打开 `example.tex`
-3. 选择 **XeLaTeX** 编译器
-4. 点击编译按钮或按快捷键（通常为 `Ctrl+Alt+B`）
+## 使用说明
 
-## 📝 配置和使用说明
+### 1. 填写论文封面信息
 
-### 修改论文信息
-
-打开 `example.tex`，找到开头的论文信息配置部分：
+在 `example.tex` 中填写：
 
 ```latex
 \titleinfo
-{RISCV}                    % 论文题目
-{张吼吼}                   % 学生姓名
-{224456634560}             % 学号
-{2022级计科8班}            % 班级
-{计算机学院}               % 专业/学院
-{唐教授}                   % 指导教师
+{论文题目}
+{学生姓名}
+{学号}
+{班级}
+{学院或专业}
+{指导教师}
+
+\secondsupervisorinfo{第二导师}
+\thesisdate{2026}{6}[18]
 ```
 
-根据需要修改上述内容。
+其中：
 
-### 设置论文时间
+- `\titleinfo` 依次对应：题目、学生姓名、学号、班级、学院/专业、指导教师
+- `\secondsupervisorinfo{}` 用于设置第二页封面的“第二导师”
+- `\thesisdate{年}{月}[日]` 中“日”为可选项
 
-在 `example.tex` 中修改：
+如果不需要填写“日”，也可以这样写：
 
 ```latex
-\thesisdate{2026}{6}       % 年份、月份
+\thesisdate{2026}{6}
 ```
 
-### 论文结构
-
-论文主要分为以下部分（可参考 `example.tex`）：
-
-1. **封面自动生成**：通过 `\makethesistitle` 命令自动生成
-2. **中文摘要**：在指定位置填写摘要和关键词
-3. **英文摘要**：提供 Abstract 和 Key words
-4. **目录**：通过 `\tableofcontents` 自动生成（无需手动编辑）
-5. **正文**：按章节组织内容
-   - `\section{章节名}` - 一级标题（居中加粗）
-   - `\subsection{小节名}` - 二级标题
-   - `\subsubsection{子小节名}` - 三级标题（可选）
-
-### 添加章节
-
-在正文部分添加新章节：
+### 2. 自动生成封面
 
 ```latex
-\section{新章节标题}
-
-\subsection{小节标题}
-
-小节内容……
-
-\subsubsection{更细致的分类（可选）}
-
-内容……
+\makethesistitle
 ```
 
-### 插入图片
+封面前两页已按要求设置：
+
+- 第一页：
+  - `毕业设计（论文）` 为宋体、加粗、48pt、居中
+  - 题目为宋体、小二、加粗、居中
+  - 学生信息为宋体三号、加粗、居中
+  - 日期为宋体三号、加粗、居中
+- 第二页：
+  - 题目为黑体二号、居中
+  - 学生姓名、学号、班级、所在学院、指导教师、第二导师、完成日期为宋体三号、加粗、居中
+
+### 3. 摘要
+
+中文摘要：
+
+```latex
+\cabstract
+{这里填写中文摘要内容。}
+{关键词1；关键词2；关键词3}
+```
+
+英文摘要：
+
+```latex
+\eabstract
+{English Title}
+{This is the abstract in English.}
+{keyword1; keyword2; keyword3}
+```
+
+### 4. 目录
+
+```latex
+\tableofcontents
+```
+
+当前目录格式已设置为：
+
+- `目录` 两字：三号黑体、居中、上下各空一行
+- 目录条目：小四号黑体
+- 整体行距：1.5 倍
+
+### 5. 正文
+
+正文开始建议使用：
+
+```latex
+\startmain
+```
+
+已设置的正文格式包括：
+
+- 中文：小四号宋体
+- 英文：Times 风格字体
+- 首行缩进 2 字
+- 1.5 倍行距
+
+一级标题格式：
+
+- 小三号黑体
+- 居中
+- 上下各空一行
+- 示例：`一 绪论`、`二 系统分析`
+
+二级标题格式：
+
+- 形如 `（一）课题背景及目的`
+- 顶格书写，序号后空一格
+- 黑体小四
+- 1.5 倍行距
+
+示例：
+
+```latex
+\section{绪论}
+\subsection{课题背景及目的}
+正文内容……
+```
+
+### 6. 分项序号
+
+模板已将一级枚举设置为全角形式：`（1）`、`（2）`、`（3）`。
+
+示例：
+
+```latex
+\begin{enumerate}
+    \item 第一项内容
+    \item 第二项内容
+    \item 第三项内容
+\end{enumerate}
+```
+
+### 7. 公式
+
+公式按章编号，格式如 `2-1`。
+
+单行公式示例：
+
+```latex
+\begin{equation}
+E = mc^2
+\end{equation}
+```
+
+多行公式建议在等号或运算符处换行：
+
+```latex
+\begin{align}
+F(x) &= x_1 + x_2 + x_3 \\
+     &\quad + x_4 + x_5
+\end{align}
+```
+
+### 8. 图片
+
+图片按章编号，图题位于图下方，五号宋体。
 
 ```latex
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.8\textwidth]{figure/图片文件名}
-\caption{图片标题}
-\label{fig:标签}
+\includegraphics[width=0.6\textwidth]{example-image}
+\caption{系统结构图}
+\label{fig:example}
 \end{figure}
-
-% 在文中引用：如图 \ref{fig:标签} 所示
 ```
 
-### 插入表格
+### 9. 表格
+
+表格按章编号，表题位于表格上方正中，五号宋体加黑。
 
 ```latex
 \begin{table}[h]
 \centering
-\caption{表格标题}
-\label{tab:标签}
-\begin{tabular}{|c|c|c|}
-\hline
-表头1 & 表头2 & 表头3 \\
-\hline
-数据1 & 数据2 & 数据3 \\
-\hline
+\caption{实验数据}
+\label{tab:example}
+\begin{tabular}{ccc}
+\toprule
+编号 & 参数 & 数值\\
+\midrule
+1 & A & 12\\
+2 & B & 15\\
+\bottomrule
 \end{tabular}
 \end{table}
 ```
 
-### 数学公式
+### 10. 参考文献
 
-**单行公式**：
+模板已设置为“中括号上标”引用风格。
+
+正文中可写：
+
 ```latex
-公式说明 $E=mc^2$（行内公式）
-
-% 或使用 equation 环境自动编号
-\begin{equation}
-E=mc^2
-\end{equation}
+这是一个引用示例\cite{ref1}。
 ```
 
-**多行公式**：
+或：
+
 ```latex
-\begin{align}
-公式1 & = 表达式1 \\
-公式2 & = 表达式2
-\end{align}
+这是一个引用示例\upcite{ref1}。
 ```
 
-### 参考文献
+参考文献标题会自动显示为“参考文献”。
 
-在正文中引用：
+### 11. 致谢与附录
+
+致谢：
+
 ```latex
-这是一个例子\cite{ref_key}。
-
-% 使用上标形式：
-这是一个例子\upcite{ref_key}。
+\acknowledgment{这里填写致谢内容。}
 ```
 
-## 🤝 参与共建
+附录：
 
-本模板为开源项目，仅实现学校基础格式要求，难免存在疏漏与不足。欢迎各位同学、开发者积极参与完善：
+```latex
+\appendixpage
+\section{程序代码}
+```
 
-- **发现问题？** 直接提交 [Issue](../../issues) 反馈（如格式不符、编译报错、功能缺失等）
-- **有改进建议？** 欢迎提交 [Pull Request](../../pulls) 共同优化模板
-- **其他方式**：联系维护者，让模板更贴合学校要求、更易用
+## 示例文件说明
 
-## 📜 许可证
+`example.tex` 已更新为完整示例，包含：
+
+- 新版封面信息填写方式
+- 中文摘要与英文摘要
+- 自动目录
+- 正文标题示例
+- 图、表、公式示例
+- 参考文献、致谢、附录
+- 第二导师字段示例
+
+可直接编译查看效果。
+
+## 常见问题
+
+### 为什么推荐 XeLaTeX？
+
+因为中文排版与字体处理更稳定，适合此类毕业论文模板。
+
+### 第二导师不需要怎么办？
+
+如果不填写 `\secondsupervisorinfo{}`，第二页会保留该字段但内容为空。
+
+### 目录、标题、正文格式是否已经封装？
+
+是的，相关样式已封装在 `hnnuthesis.cls` 中，正常使用章节命令即可自动应用。
+
+## 许可证
 
 本项目采用 [Apache License 2.0](LICENSE) 开源许可证。
 
-您可以自由地使用、修改和分发本模板，详见 [LICENSE](LICENSE) 文件。
+## 反馈
 
-## 💡 常见问题
-
-**Q：如何修改字体？**
-A：模板已包含宋体和楷体。若需其他字体，可在 `example.tex` 中使用 `\setmainfont{字体名}` 修改。
-
-**Q：怎样添加新的章节？**
-A：直接在 `example.tex` 中使用 `\section{标题}` 添加即可，目录会自动更新。
-
-**Q：编译时出现字体找不到的错误？**
-A：确保字体文件（simsun.ttc、simkai.ttf）与 `.tex` 文件在同一目录，或在编辑器中配置 XeLaTeX 编译选项。
-
-## 📧 反馈与支持
-
-如有任何问题或建议，欢迎通过以下方式联系我们：
-
-- 提交 Issue
-- 发起 Pull Request
-- 查看 [模板样例文档](HNNUThesis.pdf)
-
----
-
-**祝您论文写作顺利！** 🎉
+如果你发现格式仍与学校最新要求存在差异，欢迎继续修改并提交反馈。
