@@ -216,7 +216,12 @@
 
 \vspace{2.6cm}
 
-{\songti\bfseries\zihao{-2} \thesistitle}
+{\songti\bfseries\zihao{-2}
+\begin{tabular}{c}
+\uline{\makebox[16cm][c]{\thesistitle}} \\
+\uline{\makebox[16cm][c]{}}
+\end{tabular}
+}
 
 \vspace{2.8cm}
 
