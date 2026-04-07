@@ -105,6 +105,7 @@
         number=\arabic{section},
         format=\centering\heiti\zihao{-3},
         aftername=\hspace{1em},
+        afterindent=true,
         beforeskip=1\baselineskip,
         afterskip=1\baselineskip
     },
@@ -114,6 +115,7 @@
         format=\raggedright\heiti\zihao{4},
         indent=0pt,
         aftername=\hspace{1em},
+        afterindent=true,
         beforeskip=0.75\baselineskip,
         afterskip=0.75\baselineskip
     }
@@ -299,9 +301,7 @@
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% 摘要环境
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+% 中文摘要
 \newcommand{\cabstract}[2]{
     \clearpage
     \pagestyle{abstract}
@@ -314,7 +314,7 @@
         {\heiti\zihao{-3} 摘\quad 要}
     \end{center}
     \vspace*{1\baselineskip}
-    {\songti\zihao{-4} #1}
+    {\setlength{\parindent}{0pt}\songti\zihao{-4} #1\par}
     \vspace*{2\baselineskip}
     \par\noindent{\heiti\zihao{4} 关键词：}{\songti\zihao{-4} #2}
 }
@@ -331,7 +331,7 @@
         {\bfseries\zihao{-3} ABSTRACT}
     \end{center}
     \vspace*{1\baselineskip}
-    {\zihao{-4} #2}
+    {\setlength{\parindent}{0pt}\zihao{-4} #2\par}
     \vspace*{2\baselineskip}
     \par\noindent{\bfseries\zihao{4} Key words:}{\zihao{-4} #3}
 }
