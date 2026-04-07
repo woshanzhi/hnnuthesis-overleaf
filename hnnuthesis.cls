@@ -102,16 +102,16 @@
     contentsname={目\qquad 录},
     section={
         name={,},
-        number=\chinese{section},
+        number=\arabic{section},
         format=\centering\heiti\zihao{-3},
         aftername=\hspace{1em},
         beforeskip=1\baselineskip,
         afterskip=1\baselineskip
     },
     subsection={
-        name={（,）},
-        number=\chinese{subsection},
-        format=\raggedright\heiti\zihao{-4},
+        name={,},
+        number=\thesection.\arabic{subsection},
+        format=\raggedright\heiti\zihao{4},
         indent=0pt,
         aftername=\hspace{1em},
         beforeskip=0.75\baselineskip,
